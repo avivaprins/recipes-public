@@ -51,6 +51,17 @@
         sans-serif;
 
     --pf-input-height: 36px;
+    --pf-input-font-size: 16px;
+    --pf-summary-font-size: 12px;
+    --pf-result-title-font-size: 14px;
+    --pf-result-excerpt-font-size: 13px;
+    --pf-modal-backdrop: rgba(0, 0, 0, 0.5);
+    --pf-results-display: flex;
+    --pf-results-flex-direction: column;
+    --pf-results-flex-wrap: nowrap;
+    --pf-results-columns: none;
+    --pf-results-gap: 8px;
+
     --pf-border-radius: 6px;
     --pf-image-width: 64px;
     --pf-image-height: 48px;
@@ -93,6 +104,8 @@
     --pf-error-border: #5c2828;
     --pf-error-text: #f87171;
     --pf-error-text-secondary: #ef4444;
+
+    --pf-modal-backdrop: rgba(0, 0, 0, 0.7);
 }
 
 pagefind-config,
@@ -249,7 +262,7 @@ pagefind-modal-trigger {
     background-color: var(--pf-text-muted);
     width: 14px;
     height: 14px;
-    top: 11px;
+    top: calc((var(--pf-input-height) - 14px) / 2);
     left: 10px;
     -webkit-mask-image: var(--pf-icon-search);
     mask-image: var(--pf-icon-search);
@@ -269,7 +282,7 @@ pagefind-modal-trigger {
     background-color: var(--pf-background);
     border: 1px solid var(--pf-border);
     border-radius: var(--pf-border-radius);
-    font-size: 16px; /* Prevents iOS zoom on focus */
+    font-size: var(--pf-input-font-size);
     color: var(--pf-text);
     box-sizing: border-box;
 }
@@ -303,7 +316,8 @@ pagefind-modal-trigger {
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-input-clear {
     position: absolute;
     right: 2px;
-    top: 2px;
+    top: 50%;
+    transform: translateY(-50%);
     height: calc(100% - 4px);
     min-width: 44px;
     padding: 0 8px;
@@ -325,7 +339,7 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-summary {
-    font-size: 12px;
+    font-size: var(--pf-summary-font-size);
     color: var(--pf-text-muted);
 }
 
@@ -333,9 +347,11 @@ pagefind-modal-trigger {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    display: var(--pf-results-display);
+    flex-direction: var(--pf-results-flex-direction);
+    flex-wrap: var(--pf-results-flex-wrap);
+    grid-template-columns: var(--pf-results-columns);
+    gap: var(--pf-results-gap);
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-result {
@@ -351,7 +367,7 @@ pagefind-modal-trigger {
     padding: 12px;
     background: var(--pf-background);
     border: 1px solid var(--pf-border);
-    border-radius: 8px;
+    border-radius: var(--pf-border-radius);
     transition:
         border-color 0.15s,
         box-shadow 0.15s;
@@ -388,7 +404,7 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-result-title {
-    font-size: 14px;
+    font-size: var(--pf-result-title-font-size);
     font-weight: 500;
     margin: 0;
     line-height: 1.4;
@@ -411,7 +427,7 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-result-excerpt {
-    font-size: 13px;
+    font-size: var(--pf-result-excerpt-font-size);
     color: var(--pf-text-secondary);
     margin: 4px 0 0 0;
     line-height: 1.5;
@@ -425,15 +441,7 @@ pagefind-modal-trigger {
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-result-excerpt mark {
     background: transparent;
     font-weight: 500;
-}
-
-:is(*, #\#):is(*, #\#):is(*, #\#) .pf-result-excerpt mark,
-:is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-result-excerpt mark {
     color: var(--pf-mark);
-}
-
-:is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-excerpt mark {
-    color: var(--pf-text-secondary);
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-skeleton {
@@ -1006,6 +1014,7 @@ pagefind-modal-trigger {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    width: 100%;
     height: var(--pf-input-height);
     padding: 0 14px;
     background: var(--pf-background);
@@ -1035,6 +1044,8 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-trigger-text {
+    flex: 1;
+    text-align: left;
     color: var(--pf-text-muted);
 }
 
@@ -1077,15 +1088,9 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) dialog.pf-modal::backdrop {
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--pf-modal-backdrop);
     overflow: hidden;
     overscroll-behavior: contain;
-}
-
-:is(*, #\#):is(*, #\#):is(*, #\#)
-    [data-pf-theme="dark"]
-    dialog.pf-modal::backdrop {
-    background: rgba(0, 0, 0, 0.7);
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) dialog.pf-modal[open] {
@@ -1189,14 +1194,15 @@ pagefind-modal-trigger {
     pagefind-modal-header
     .pf-input-wrapper::before,
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-modal-header .pf-input-wrapper::before {
-    top: 11px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-header .pf-input,
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-modal-header .pf-input {
     border: none;
     background: transparent;
-    font-size: 16px;
+    font-size: var(--pf-input-font-size);
     height: 40px;
 }
 
@@ -1271,8 +1277,32 @@ pagefind-modal-trigger {
     position: relative;
 }
 
+/* Override trigger-shortcut positioning when inside searchbox */
+:is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input-wrapper .pf-trigger-shortcut {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    margin-left: 0;
+}
+
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input {
     padding: 0 12px 0 32px;
+}
+
+/* Add padding when shortcut is present */
+:is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input-wrapper:has(.pf-trigger-shortcut) .pf-searchbox-input {
+    padding-right: 72px;
+}
+
+/* Hide shortcut badge when input is focused */
+:is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input:focus ~ .pf-trigger-shortcut {
+    display: none;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input:focus {
+    padding-right: 12px;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox.open .pf-searchbox-input {
