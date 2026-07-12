@@ -127,12 +127,13 @@ pagefind-summary {
 
     /* Typography baseline */
     font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
+        var(--pf-font,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif);
     font-size: 16px;
     line-height: 1.5;
     color: CanvasText;
@@ -159,6 +160,11 @@ pagefind-modal-trigger {
 
 :is(*, #\#):is(*, #\#) :is([class^="pf-"], [class*=" pf-"]):not(svg, svg *) {
     all: revert;
+    box-sizing: border-box;
+}
+
+:is(*, #\#):is(*, #\#) :is([class^="pf-"], [class*=" pf-"]):not(svg, svg *)::before,
+:is(*, #\#):is(*, #\#) :is([class^="pf-"], [class*=" pf-"]):not(svg, svg *)::after {
     box-sizing: border-box;
 }
 
@@ -263,7 +269,7 @@ pagefind-modal-trigger {
     width: 14px;
     height: 14px;
     top: calc((var(--pf-input-height) - 14px) / 2);
-    left: 10px;
+    inset-inline-start: 10px;
     -webkit-mask-image: var(--pf-icon-search);
     mask-image: var(--pf-icon-search);
     -webkit-mask-size: 100%;
@@ -282,13 +288,16 @@ pagefind-modal-trigger {
     background-color: var(--pf-background);
     border: 1px solid var(--pf-border);
     border-radius: var(--pf-border-radius);
+    font-family: var(--pf-font, inherit);
     font-size: var(--pf-input-font-size);
     color: var(--pf-text);
     box-sizing: border-box;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-input {
-    padding: 0 36px 0 32px;
+    padding: 0;
+    padding-inline-start: 32px;
+    padding-inline-end: 36px;
     font-weight: 400;
 }
 
@@ -315,7 +324,7 @@ pagefind-modal-trigger {
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-input-clear {
     position: absolute;
-    right: 2px;
+    inset-inline-end: 2px;
     top: 50%;
     transform: translateY(-50%);
     height: calc(100% - 4px);
@@ -531,7 +540,7 @@ pagefind-modal-trigger {
     gap: 6px;
     margin: 0;
     padding: 0;
-    padding-left: 12px;
+    padding-inline-start: 12px;
     list-style: none;
 }
 
@@ -575,7 +584,7 @@ pagefind-modal-trigger {
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-link::before {
     content: "#";
     color: var(--pf-text-muted);
-    margin-right: 4px;
+    margin-inline-end: 4px;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-link::after {
@@ -676,7 +685,7 @@ pagefind-modal-trigger {
     width: 10px;
     height: 6px;
     flex-shrink: 0;
-    margin-left: 8px;
+    margin-inline-start: 8px;
     background: var(--pf-text-muted);
     -webkit-mask-image: var(--pf-icon-arrow);
     mask-image: var(--pf-icon-arrow);
@@ -689,6 +698,13 @@ pagefind-modal-trigger {
     details.pf-filter-group:not([open])
     > summary.pf-filter-group-title::after {
     transform: rotate(-90deg);
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#)
+    [dir="rtl"]
+    details.pf-filter-group:not([open])
+    > summary.pf-filter-group-title::after {
+    transform: rotate(90deg);
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) summary.pf-filter-group-title:hover {
@@ -714,7 +730,7 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-filter-group-count {
-    margin-left: auto;
+    margin-inline-start: auto;
     text-transform: none;
 }
 
@@ -773,7 +789,7 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-filter-checkbox-count {
-    margin-left: auto;
+    margin-inline-start: auto;
     font-size: 11px;
     color: var(--pf-text-muted);
 }
@@ -843,7 +859,7 @@ pagefind-modal-trigger {
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-dropdown-menu {
     position: absolute;
     top: calc(100% + 4px);
-    left: 0;
+    inset-inline-start: 0;
     min-width: 180px;
     max-height: var(--pf-dropdown-max-height);
     overflow-y: auto;
@@ -928,7 +944,7 @@ pagefind-modal-trigger {
     .pf-dropdown-checkbox::after {
     content: "";
     position: absolute;
-    left: 5px;
+    inset-inline-start: 5px;
     top: 2px;
     width: 4px;
     height: 8px;
@@ -942,7 +958,7 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-dropdown-option-count {
-    margin-left: auto;
+    margin-inline-start: auto;
     font-size: 11px;
     color: var(--pf-text-muted);
     flex-shrink: 0;
@@ -983,7 +999,7 @@ pagefind-modal-trigger {
     align-items: center;
     height: 44px;
     padding: 0 10px;
-    margin-left: 4px;
+    margin-inline-start: 4px;
     background: transparent;
     border: 1px solid transparent;
     border-radius: var(--pf-border-radius);
@@ -1045,7 +1061,7 @@ pagefind-modal-trigger {
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-trigger-text {
     flex: 1;
-    text-align: left;
+    text-align: start;
     color: var(--pf-text-muted);
 }
 
@@ -1053,7 +1069,7 @@ pagefind-modal-trigger {
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    margin-left: 8px;
+    margin-inline-start: 8px;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-trigger-key {
@@ -1208,7 +1224,7 @@ pagefind-modal-trigger {
 
 :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-body,
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-modal-body {
-    flex: 1;
+    flex: 1 1 auto;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 8px 16px 16px;
@@ -1280,20 +1296,22 @@ pagefind-modal-trigger {
 /* Override trigger-shortcut positioning when inside searchbox */
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input-wrapper .pf-trigger-shortcut {
     position: absolute;
-    right: 12px;
+    inset-inline-end: 12px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    margin-left: 0;
+    margin-inline-start: 0;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input {
-    padding: 0 12px 0 32px;
+    padding: 0;
+    padding-inline-start: 32px;
+    padding-inline-end: 12px;
 }
 
 /* Add padding when shortcut is present */
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input-wrapper:has(.pf-trigger-shortcut) .pf-searchbox-input {
-    padding-right: 72px;
+    padding-inline-end: 72px;
 }
 
 /* Hide shortcut badge when input is focused */
@@ -1302,7 +1320,8 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-input:focus {
-    padding-right: 12px;
+    padding-inline-end: 12px;
+    border-color: var(--pf-border-focus);
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox.open .pf-searchbox-input {
@@ -1389,9 +1408,9 @@ pagefind-modal-trigger {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-subresult {
-    padding-left: 20px;
-    border-left: 2px solid var(--pf-border);
-    margin-left: 10px;
+    padding-inline-start: 20px;
+    border-inline-start: 2px solid var(--pf-border);
+    margin-inline-start: 10px;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-searchbox-result-meta {
@@ -1473,6 +1492,7 @@ pagefind-modal-trigger {
         min-width: unset;
         width: max(180px, calc(100vw - 32px));
         max-width: calc(100vw - 32px);
+        inset-inline-start: unset;
         left: 50%;
         transform: translateX(-50%);
         max-height: min(var(--pf-dropdown-max-height), 50vh);
